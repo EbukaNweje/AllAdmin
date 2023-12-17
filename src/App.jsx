@@ -22,6 +22,7 @@ import FrontendSettings from "./Pages/FrontendSettings";
 import IPSettings from "./Pages/IPSettings";
 import Platform from "./Pages/Platform";
 import HomeRoute from "./HomeRoute";
+import ForgetPassword from "./Pages/ForgetPassword";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,12 @@ const router = createBrowserRouter([
     </>,
   },
   {
+    path: "/admin/forget-password",
+    element: <>
+      <ForgetPassword/>
+    </>,
+  },
+  {
     
       path: "admin",
       element: <AdminHome />,
@@ -45,7 +52,7 @@ const router = createBrowserRouter([
               path: "dashboard",
               element: (
                   <>
-                      <Dashboard />,
+                      <Dashboard />
                   </>
               ),
           },
@@ -53,7 +60,7 @@ const router = createBrowserRouter([
               path: "dashboard/plans",
               element: (
                   <>
-                      <InvestmentPlans />,
+                      <InvestmentPlans />
                   </>
               ),
           },
@@ -61,7 +68,7 @@ const router = createBrowserRouter([
               path: "dashboard/active-investment",
               element: (
                   <>
-                      <ActiveInvestment />,
+                      <ActiveInvestment />
                   </>
               ),
           },
@@ -69,7 +76,7 @@ const router = createBrowserRouter([
               path: "dashboard/manageusers",
               element: (
                   <>
-                      <ManageUsers />,
+                      <ManageUsers />
                   </>
               ),
           },
@@ -77,7 +84,7 @@ const router = createBrowserRouter([
               path: "dashboard/manage-deposits",
               element: (
                   <>
-                      <ManageDeposit />,
+                      <ManageDeposit />
                   </>
               ),
           },
@@ -85,7 +92,7 @@ const router = createBrowserRouter([
               path: "dashboard/manage-withdrawals",
               element: (
                   <>
-                      <ManageWithdrawal />,
+                      <ManageWithdrawal />
                   </>
               ),
           },
@@ -122,67 +129,61 @@ const router = createBrowserRouter([
           {
               path: "dashboard/add-manager",
               element: <>
-              <AddManager />,
+              <AddManager />
               </>
           },
           {
               path: "dashboard/manage-admin",
               element: <>
-              <ManageAdmin />,
+              <ManageAdmin />
               </>
           },
           {
               path: "dashboard/app-settings",
               element: <>
-              <AppSettings />,
+              <AppSettings />
               </>
           },
           {
               path: "dashboard/referral-settings",
               element: <>
-              <ReferralSettings />,
+              <ReferralSettings />
               </>
           },
           {
               path: "dashboard/payment-settings",
               element: <>
-              <AddManager />,
-              </>
-          },
-          {
-              path: "dashboard/payment-settings",
-              element: <>
-              <PaymentSettings />,
+              <PaymentSettings />
               </>
           },
           {
               path: "dashboard/manage-crypto-assets",
               element: <>
-              <SwapSettings />,
+              <SwapSettings />
               </>
           },
           {
               path: "dashboard/frontpage",
               element: <>
-              <FrontendSettings />,
+              <FrontendSettings />
               </>
           },
           {
               path: "dashboard/privacy-policy",
               element: <>
-              <AddManager />,
+              <AddManager />
               </>
           },
           {
               path: "dashboard/ipaddress",
               element: <>
-              <IPSettings />,
+              <IPSettings />
               </>
           },
           {
               path: "dashboard/platform",
               element: <>
-              <Platform />,
+              <Platform />
               </>
           },
       ],

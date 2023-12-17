@@ -2,7 +2,11 @@
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <>
+      <div className="w-full h-max bg-white ">
+        Home
+      </div>
+    </>
   )
 }
 
