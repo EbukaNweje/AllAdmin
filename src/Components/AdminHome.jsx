@@ -4,6 +4,7 @@ import SideNav from "./SideNav";
 import Footer from "./Footer";
 import {useState} from "react";
 import "./Component.css";
+import SideNavMobile from "./SideNavMobile";
 
 const AdminHome = () => {
     const [sideBar, setSideBar] = useState(false);
@@ -17,12 +18,12 @@ const AdminHome = () => {
         <>
             <div className="w-full h-max phone:flex">
                 <div
-                    className={`phone:w-[59vw] phone:h-[100vh] bg-purple-300 hidden phone:block phone:overflow-y-auto z-10 fixed top-0 left-0 right-0 ${
+                    className={`phone:w-64 shadow-2xl phone:h-[100vh] bg-purple-300 hidden phone:block phone:overflow-y-auto z-10 fixed top-0 left-0 right-0 ${
                         sideBar ? "sidebar sideOpen" : "sidebar"
                     }`}
                 >
-                    <div className="phone:w-full phone:h-[200vh] flex-auto bg-lime-100">
-                        <p>p</p>
+                    <div className="phone:w-full phone:h-max flex-auto bg-lime-100">
+                        <SideNavMobile />
                     </div>
                 </div>
                 <div

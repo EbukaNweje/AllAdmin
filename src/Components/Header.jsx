@@ -27,7 +27,7 @@ const Header = ({sideBar}) => {
                         />
                     </div>
                     <FaUser className="cursor-pointer w-8 h-8 p-1 phone:hidden text-white" />
-                    <HiDotsVertical className="hidden phone:block w-7 h-7 cursor-pointer text-white" onClick={sideBar}/>
+                    <HiDotsVertical className="hidden phone:block w-7 h-7 cursor-pointer text-white"/>
                 </div>
             </div>
         </>
