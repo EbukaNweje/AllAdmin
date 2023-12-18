@@ -36,7 +36,7 @@ const AdminHome = () => {
                         <SideNav />
                         <div className="w-[84%] phone:w-[100%] h-max flex flex-col overflow-y-auto shadow-lg">
                             <div className="h-[90.8vh] phone:h-[91.5vh] w-full bg-[#0e4152]">
-                                <div className="w-full min-h-[76vh] phone:min-h-[78.5vh] h-max bg-white">
+                                <div className="w-full min-h-[76vh] phone:min-h-[78.5vh] h-max bg-[#f9fbfd]">
                                     <Outlet />
                                 </div>
                                 <Footer />
