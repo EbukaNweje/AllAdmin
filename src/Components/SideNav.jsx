@@ -45,7 +45,7 @@ const SideNav = () => {
 
     return (
         <>
-            <div className="w-64 h-[90vh] bg-white phone:hidden overflow-y-auto">
+            <div className="seesidebar w-64 h-[90vh] bg-white phone:hidden overflow-y-auto">
                 <div className="w-full h-max px-5 flex flex-col gap-4">
                     <div className="w-full h-20 flex flex-col justify-center border-b border-b-gray-200 cursor-pointer">
                         <p className="text-[rgb(119,119,119)]">Admin Test</p>
