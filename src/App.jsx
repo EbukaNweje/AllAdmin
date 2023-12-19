@@ -23,6 +23,7 @@ import IPSettings from "./Pages/IPSettings";
 import Platform from "./Pages/Platform";
 import HomeRoute from "./HomeRoute";
 import ForgetPassword from "./Pages/ForgetPassword";
+import UserDetails from "./Pages/UserDetails";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,14 @@ const router = createBrowserRouter([
               element: (
                   <>
                       <ManageUsers />
+                  </>
+              ),
+          },
+          {
+              path: "dashboard/user-details/:id",
+              element: (
+                  <>
+                      <UserDetails />
                   </>
               ),
           },
