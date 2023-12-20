@@ -25,7 +25,55 @@ const UserDetails = () => {
     const [creditDebit, setCreditDebit] = useState(false);
     const handleCreditDebit = () => {
         setCreditDebit(false);
-        console.log("Blocking user");
+        const toastLoadingId = toast.loading("Please wait...");
+        setTimeout(() => {
+            toast.dismiss(toastLoadingId);
+            toast.success("Account updated successfully");
+        }, 3000);
+        setShowActions(false);
+    };
+
+    const [resetPwd, setResetPwd] = useState(false);
+    const handleResetPwd = () => {
+        setResetPwd(false);
+        const toastLoadingId = toast.loading("Please wait...");
+        setTimeout(() => {
+            toast.dismiss(toastLoadingId);
+            toast.success("Password reset successfully");
+        }, 3000);
+        setShowActions(false);
+    };
+
+    const [clearAcc, setClearAcc] = useState(false);
+    const handleClearAcc = () => {
+        setClearAcc(false);
+        const toastLoadingId = toast.loading("Please wait...");
+        setTimeout(() => {
+            toast.dismiss(toastLoadingId);
+            toast.success("Account cleared successfully");
+        }, 3000);
+        setShowActions(false);
+    };
+
+    const [addRoi, setAddRoi] = useState(false);
+    const handleAddRoi = () => {
+        setAddRoi(false);
+        const toastLoadingId = toast.loading("Please wait...");
+        setTimeout(() => {
+            toast.dismiss(toastLoadingId);
+            toast.success("ROI added successfully");
+        }, 3000);
+        setShowActions(false);
+    };
+
+    const [edit, setEdit] = useState(false);
+    const handleEdit = () => {
+        setEdit(false);
+        const toastLoadingId = toast.loading("Please wait...");
+        setTimeout(() => {
+            toast.dismiss(toastLoadingId);
+            toast.success("Account updated successfully");
+        }, 3000);
         setShowActions(false);
     };
 
@@ -73,16 +121,34 @@ const UserDetails = () => {
                                         >
                                             Turn off auto ROI
                                         </div>
-                                        <div className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer" onClick={()=>setCreditDebit(!creditDebit)}>
+                                        <div
+                                            className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer"
+                                            onClick={() =>
+                                                setCreditDebit(!creditDebit)
+                                            }
+                                        >
                                             Credit/Debit
                                         </div>
-                                        <div className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer">
+                                        <div
+                                            className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer"
+                                            onClick={() =>
+                                                setResetPwd(!resetPwd)
+                                            }
+                                        >
                                             Reset Password
                                         </div>
-                                        <div className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer">
+                                        <div
+                                            className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer"
+                                            onClick={() =>
+                                                setClearAcc(!clearAcc)
+                                            }
+                                        >
                                             Clear Account
                                         </div>
-                                        <div className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer">
+                                        <div
+                                            className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer"
+                                            onClick={() => setAddRoi(!addRoi)}
+                                        >
                                             Add ROI history
                                         </div>
                                         <div className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer">
@@ -261,12 +327,22 @@ const UserDetails = () => {
             >
                 <div className="w-full h-max pt-6 flex flex-col gap-4">
                     <div className="w-full h-max flex">
-                        <div className="w-10 h-10 bg-gray-300 flex items-center justify-center">$</div>
-                        <input type="number" placeholder="Enter amount" className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"/>
+                        <div className="w-10 h-10 bg-gray-300 flex items-center justify-center">
+                            $
+                        </div>
+                        <input
+                            type="number"
+                            placeholder="Enter amount"
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        />
                     </div>
                     <div className="w-full h-max">
                         <p>Select where to Credit/Debit</p>
-                        <select name="" id="" className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300">
+                        <select
+                            name=""
+                            id=""
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        >
                             <option value="">Select Column</option>
                             <option value="">Bonus</option>
                             <option value="">Profit</option>
@@ -277,7 +353,11 @@ const UserDetails = () => {
                     </div>
                     <div className="w-full">
                         <p>Select credit to add, debit to subtract</p>
-                        <select name="" id="" className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300">
+                        <select
+                            name=""
+                            id=""
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        >
                             <option value="">Select Type</option>
                             <option value="">Credit</option>
                             <option value="">Debit</option>
@@ -286,6 +366,149 @@ const UserDetails = () => {
                             <span>NOTE: &nbsp;</span>You cannot debit the
                             deposit column of users
                         </p>
+                    </div>
+                </div>
+            </Modal>
+            <Modal
+                open={resetPwd}
+                onOk={handleResetPwd}
+                onCancel={() => setResetPwd(false)}
+                okButtonProps={{
+                    className: "bg-[#0A503D] text-white",
+                    size: "middle",
+                    style: {
+                        backgroundColor: "#0e4152",
+                    },
+                }}
+                okText={"Reset Now"}
+                closeIcon={true}
+                title={"Reset Password"}
+            >
+                <p className="text-base">
+                    Are you sure you want to reset password for Jairo Arcila to
+                    user01236
+                </p>
+            </Modal>
+            <Modal
+                open={clearAcc}
+                onOk={handleClearAcc}
+                onCancel={() => setClearAcc(false)}
+                okButtonProps={{
+                    className: "bg-[#ffad46] text-white",
+                    size: "middle",
+                    style: {
+                        backgroundColor: "#ffad46",
+                    },
+                }}
+                okText={"Proceed"}
+                closeIcon={true}
+                title={"Clear Account"}
+            >
+                <p className="text-base">
+                    You are clearing account for Jairo Arcila to $0.00
+                </p>
+            </Modal>
+            <Modal
+                open={addRoi}
+                onOk={handleAddRoi}
+                onCancel={() => setAddRoi(false)}
+                cancelButtonProps={{hidden: true}}
+                okButtonProps={{
+                    className: "bg-[#0A503D] text-white",
+                    size: "middle",
+                    style: {
+                        backgroundColor: "#0e4152",
+                    },
+                }}
+                okText={"Add History"}
+                closeIcon={true}
+                title={"Add Trading History for Jairo Arcila"}
+            >
+                <div className="w-full h-max pt-6 flex flex-col gap-4">
+                    <div className="w-full h-max">
+                        <p>Select Investment Plan</p>
+                        <select
+                            name=""
+                            id=""
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        >
+                            <option value="">Select Plan</option>
+                            <option value="">Deluxe Plan</option>
+                            <option value="">Premium Plan</option>
+                            <option value="">Starter Plan</option>
+                        </select>
+                    </div>
+                    <div className="w-full h-max">
+                        <p>Select Investment Plan</p>
+                        <input
+                            type="number"
+                            placeholder="Enter amount"
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        />
+                    </div>
+                    <div className="w-full">
+                        <p>Type</p>
+                        <select
+                            name=""
+                            id=""
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        >
+                            <option value="">Select Type</option>
+                            <option value="">Bonus</option>
+                            <option value="">ROI</option>
+                        </select>
+                    </div>
+                </div>
+            </Modal>
+            <Modal
+                open={addRoi}
+                onOk={handleAddRoi}
+                onCancel={() => setAddRoi(false)}
+                cancelButtonProps={{hidden: true}}
+                okButtonProps={{
+                    className: "bg-[#0A503D] text-white",
+                    size: "middle",
+                    style: {
+                        backgroundColor: "#0e4152",
+                    },
+                }}
+                okText={"Add History"}
+                closeIcon={true}
+                title={"Add Trading History for Jairo Arcila"}
+            >
+                <div className="w-full h-max pt-6 flex flex-col gap-4">
+                    <div className="w-full h-max">
+                        <p>Select Investment Plan</p>
+                        <select
+                            name=""
+                            id=""
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        >
+                            <option value="">Select Plan</option>
+                            <option value="">Deluxe Plan</option>
+                            <option value="">Premium Plan</option>
+                            <option value="">Starter Plan</option>
+                        </select>
+                    </div>
+                    <div className="w-full h-max">
+                        <p>Select Investment Plan</p>
+                        <input
+                            type="number"
+                            placeholder="Enter amount"
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        />
+                    </div>
+                    <div className="w-full">
+                        <p>Type</p>
+                        <select
+                            name=""
+                            id=""
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        >
+                            <option value="">Select Type</option>
+                            <option value="">Bonus</option>
+                            <option value="">ROI</option>
+                        </select>
                     </div>
                 </div>
             </Modal>
