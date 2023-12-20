@@ -24,6 +24,8 @@ import Platform from "./Pages/Platform";
 import HomeRoute from "./HomeRoute";
 import ForgetPassword from "./Pages/ForgetPassword";
 import UserDetails from "./Pages/UserDetails";
+import LoginActivity from "./Pages/LoginActivity";
+import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
   {
@@ -86,6 +88,14 @@ const router = createBrowserRouter([
               element: (
                   <>
                       <UserDetails />
+                  </>
+              ),
+          },
+          {
+              path: "dashboard/login-activity/:id",
+              element: (
+                  <>
+                      <LoginActivity />
                   </>
               ),
           },
@@ -201,6 +211,7 @@ const router = createBrowserRouter([
 
 const App = () => {
     return  <>
+   
     <RouterProvider router={router} />
 </>
 };

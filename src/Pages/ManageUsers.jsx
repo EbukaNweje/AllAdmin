@@ -1,7 +1,7 @@
 import {IoMail} from "react-icons/io5";
 import {HiUserAdd} from "react-icons/hi";
 import {Modal} from "antd";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 
 const ManageUsers = () => {
@@ -10,6 +10,16 @@ const ManageUsers = () => {
     const handleAddNewUser = () => {
         setAddNewUser(!addNewUser);
     };
+
+    const [showIcon, setShowIcon] = useState(true);
+
+    useEffect(() => {
+      if (window.innerWidth <= 480) {
+        setShowIcon(false);
+      } else {
+        setShowIcon(true);
+      }
+    }, []); 
 
     return (
         <>
@@ -21,18 +31,22 @@ const ManageUsers = () => {
                             <input
                                 type="search"
                                 placeholder="name, username or email"
-                                className="w-48 h-8 border outline-offset-0 outline-0 border-solid border-gray-200 pl-2 text-sm rounded outline-gray-200 outline"
+                                className="w-48 phone:w-24 h-8 border outline-offset-0 outline-0 border-solid border-gray-200 pl-2 text-sm rounded outline-gray-200 outline"
                             />
                             <button className="p-2 rounded flex items-center gap-1 justify-center text-xs text-white bg-[#48abf7]">
-                                <IoMail className="w-3 h-3" />
-                                Send message
+                                <IoMail className={` ${showIcon? 'w-3 h-3':"w-6 h-5"}`} />
+                                {
+                                  showIcon && 'Send message'
+                                }
                             </button>
                             <button
                                 className="p-2 rounded flex items-center gap-1 justify-center text-xs text-white bg-[#0e4152]"
                                 onClick={handleAddNewUser}
                             >
-                                <HiUserAdd className="w-3 h-3" />
-                                New user
+                                <HiUserAdd className={` ${showIcon? 'w-3 h-3':"w-6 h-5"}`} />
+                                {
+                                  showIcon && 'New user'
+                                }
                             </button>
                         </div>
                         <div className="w-full h-max overflow-x-auto pt-6 pb-6 px-6">
@@ -41,7 +55,7 @@ const ManageUsers = () => {
                                     <div className="w-14  h-full flex items-center ">
                                         <input
                                             type="checkbox"
-                                            className="w-3 h-3 cursor-pointer"
+                                            className="w-3 h-3 phone:w-5 phone:h-5 cursor-pointer"
                                         />
                                     </div>
                                     <div className="w-32  h-full flex items-center  ">
@@ -76,7 +90,7 @@ const ManageUsers = () => {
                                     <div className="w-14  h-full flex items-center ">
                                         <input
                                             type="checkbox"
-                                            className="w-3 h-3 cursor-pointer"
+                                            className="w-3 h-3 phone:w-5 phone:h-5 cursor-pointer"
                                         />
                                     </div>
                                     <div className="w-32  h-full flex items-center  ">
@@ -117,7 +131,7 @@ const ManageUsers = () => {
                                     <div className="w-14  h-full flex items-center ">
                                         <input
                                             type="checkbox"
-                                            className="w-3 h-3 cursor-pointer"
+                                            className="w-3 h-3 phone:w-5 phone:h-5 cursor-pointer"
                                         />
                                     </div>
                                     <div className="w-32  h-full flex items-center  ">
@@ -154,7 +168,7 @@ const ManageUsers = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="full h-20 flex items-center gap-10">
+                        <div className="full h-20 flex items-center gap-10 phone:gap-5 phone:justify-between">
                             <select
                                 name=""
                                 id=""
@@ -169,7 +183,7 @@ const ManageUsers = () => {
                             <select
                                 name=""
                                 id=""
-                                className="w-40 border h-10 rounded px-2"
+                                className="w-40 phone:w-24 border h-10 rounded px-2"
                             >
                                 <option value="">Id</option>
                                 <option value="">Name</option>
@@ -179,7 +193,7 @@ const ManageUsers = () => {
                             <select
                                 name=""
                                 id=""
-                                className="w-40 border h-10 rounded px-2"
+                                className="w-40 phone:w-28 border h-10 rounded px-2"
                             >
                                 <option value="">Descending</option>
                                 <option value="">Ascending</option>
