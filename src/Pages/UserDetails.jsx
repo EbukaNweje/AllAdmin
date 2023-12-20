@@ -77,6 +77,39 @@ const UserDetails = () => {
         setShowActions(false);
     };
 
+    const [sendEmail, setSendEmail] = useState(false);
+    const handleSendEmail = () => {
+        setSendEmail(false);
+        const toastLoadingId = toast.loading("Please wait...");
+        setTimeout(() => {
+            toast.dismiss(toastLoadingId);
+            toast.success("Email sent successfully");
+        }, 3000);
+        setShowActions(false);
+    };
+
+    const [login, setLogin] = useState(false);
+    const handleLogin = () => {
+        setLogin(false);
+        const toastLoadingId = toast.loading("Please wait...");
+        setTimeout(() => {
+            toast.dismiss(toastLoadingId);
+            toast.success("Success");
+        }, 3000);
+        setShowActions(false);
+    };
+
+    const [deleteUser, setDeleteUser] = useState(false);
+    const handleDelete = () => {
+        setDeleteUser(false);
+        const toastLoadingId = toast.loading("Please wait...");
+        setTimeout(() => {
+            toast.dismiss(toastLoadingId);
+            toast.success("Success");
+        }, 3000);
+        setShowActions(false);
+    };
+
     return (
         <>
             <div className="w-full h-max px-6 py-10 flex flex-col gap-2 phone:gap-8 bg-[#f9fbfd] text-[rgb(87,89,98)]">
@@ -151,19 +184,35 @@ const UserDetails = () => {
                                         >
                                             Add ROI history
                                         </div>
-                                        <div className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer">
+                                        <div
+                                            className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer"
+                                            onClick={() => setEdit(!edit)}
+                                        >
                                             Edit
                                         </div>
                                         <div className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer">
                                             Add Referral
                                         </div>
-                                        <div className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer">
+                                        <div
+                                            className="w-full h-7 flex items-center pl-1 text-sm hover:bg-gray-300 cursor-pointer"
+                                            onClick={() =>
+                                                setSendEmail(!sendEmail)
+                                            }
+                                        >
                                             Send Email
                                         </div>
-                                        <div className="w-full h-max flex items-center pl-1 py-1 text-sm hover:bg-gray-300 cursor-pointer text-[#31ce36]">
+                                        <div
+                                            className="w-full h-max flex items-center pl-1 py-1 text-sm hover:bg-gray-300 cursor-pointer text-[#31ce36]"
+                                            onClick={() => setLogin(!login)}
+                                        >
                                             Login as Jairo Arcila
                                         </div>
-                                        <div className="w-full h-max flex items-center pl-1 py-1 text-sm hover:bg-gray-300 cursor-pointer text-[#f25961]">
+                                        <div
+                                            className="w-full h-max flex items-center pl-1 py-1 text-sm hover:bg-gray-300 cursor-pointer text-[#f25961]"
+                                            onClick={() =>
+                                                setDeleteUser(!deleteUser)
+                                            }
+                                        >
                                             Delete Jairo Arcila
                                         </div>
                                     </div>
@@ -461,9 +510,9 @@ const UserDetails = () => {
                 </div>
             </Modal>
             <Modal
-                open={addRoi}
-                onOk={handleAddRoi}
-                onCancel={() => setAddRoi(false)}
+                open={edit}
+                onOk={handleEdit}
+                onCancel={() => setEdit(false)}
                 cancelButtonProps={{hidden: true}}
                 okButtonProps={{
                     className: "bg-[#0A503D] text-white",
@@ -472,45 +521,130 @@ const UserDetails = () => {
                         backgroundColor: "#0e4152",
                     },
                 }}
-                okText={"Add History"}
+                okText={"Update"}
                 closeIcon={true}
-                title={"Add Trading History for Jairo Arcila"}
+                title={"Edit Jairo Arcila details."}
             >
                 <div className="w-full h-max pt-6 flex flex-col gap-4">
                     <div className="w-full h-max">
-                        <p>Select Investment Plan</p>
-                        <select
-                            name=""
-                            id=""
+                        <p>Username</p>
+                        <input
+                            type="text"
                             className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
-                        >
-                            <option value="">Select Plan</option>
-                            <option value="">Deluxe Plan</option>
-                            <option value="">Premium Plan</option>
-                            <option value="">Starter Plan</option>
-                        </select>
+                        />
+                        <p>
+                            Note: same username should be use in the referral
+                            link.
+                        </p>
                     </div>
                     <div className="w-full h-max">
-                        <p>Select Investment Plan</p>
+                        <p>Full name</p>
                         <input
-                            type="number"
-                            placeholder="Enter amount"
+                            type="text"
                             className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
                         />
                     </div>
-                    <div className="w-full">
-                        <p>Type</p>
-                        <select
-                            name=""
-                            id=""
+                    <div className="w-full h-max">
+                        <p>Email</p>
+                        <input
+                            type="text"
                             className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
-                        >
-                            <option value="">Select Type</option>
-                            <option value="">Bonus</option>
-                            <option value="">ROI</option>
-                        </select>
+                        />
+                    </div>
+                    <div className="w-full h-max">
+                        <p>Phone number</p>
+                        <input
+                            type="text"
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        />
+                    </div>
+                    <div className="w-full h-max">
+                        <p>Country</p>
+                        <input
+                            type="text"
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        />
+                    </div>
+                    <div className="w-full h-max">
+                        <p>Referral link</p>
+                        <input
+                            type="text"
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        />
                     </div>
                 </div>
+            </Modal>
+            <Modal
+                open={sendEmail}
+                onOk={handleSendEmail}
+                onCancel={() => setSendEmail(false)}
+                cancelButtonProps={{hidden: true}}
+                okButtonProps={{
+                    className: "bg-[#0A503D] text-white",
+                    size: "middle",
+                    style: {
+                        backgroundColor: "#0e4152",
+                    },
+                }}
+                okText={"Send"}
+                closeIcon={true}
+                title={"Send Email"}
+            >
+                <div className="w-full h-max pt-6 flex flex-col gap-4">
+                    <p>This message will be sent to Jairo Arcila</p>
+                    <div className="w-full h-max">
+                        <input
+                            type="text"
+                            placeholder="Subject"
+                            className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        />
+                    </div>
+                    <div className="w-full h-max">
+                        <textarea
+                            name=""
+                            id=""
+                            cols="30"
+                            rows="10"
+                            className="w-full h-20 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                        ></textarea>
+                    </div>
+                </div>
+            </Modal>
+
+            <Modal
+                open={login}
+                onOk={handleLogin}
+                onCancel={() => setLogin(false)}
+                okButtonProps={{
+                    className: "bg-[#ffad46] text-white",
+                    size: "middle",
+                    style: {
+                        backgroundColor: "#31ce36",
+                    },
+                }}
+                okText={"Proceed"}
+                closeIcon={true}
+                title={"You are about to login as Jairo Arcila."}
+            ></Modal>
+            <Modal
+                open={deleteUser}
+                onOk={handleDelete}
+                onCancel={() => setDeleteUser(false)}
+                okButtonProps={{
+                    className: "bg-[#ffad46] text-white",
+                    size: "middle",
+                    style: {
+                        backgroundColor: "#f25961",
+                    },
+                }}
+                okText={"Yes I'm sure"}
+                closeIcon={true}
+                title={"Delete User"}
+            >
+                <p>
+                    Are you sure you want to delete Jairo Arcila Account?
+                    Everything associated with this account will be loss.
+                </p>
             </Modal>
         </>
     );
