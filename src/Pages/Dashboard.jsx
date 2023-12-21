@@ -17,7 +17,7 @@ const Dashboard = () => {
     console.log(loadAdminData());
 
     const getAllUserData = () =>{
-        const url = "https://swiftcryptrade-backend.vercel.app/api/alluserdata"
+        const url = "https://swiftearnprime.vercel.app/api/alluserdata"
         axios.get(url)
         .then((response)=>{
             // console.log(response);

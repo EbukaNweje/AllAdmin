@@ -7,6 +7,31 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 
 const UserDetails = () => {
+
+    const [oneUserData, setOneUserData] = useState({});
+    const {id} = useParams();
+
+    const handleGetOneUserData = () => {
+        const url = `https://swiftearnprime.vercel.app/api/userdata/${id}`;
+        axios
+            .get(url)
+            .then((res) => {
+                console.log(res?.data);
+                setOneUserData(res?.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    useEffect(() => {
+        if (id) {
+            handleGetOneUserData();
+        }
+    }, [id]);
+
+    console.log(oneUserData);
+
     const [showActions, setShowActions] = useState(false);
     const [blockUser, setBlockUser] = useState(false);
     const handleBlockUser = () => {
@@ -25,14 +50,57 @@ const UserDetails = () => {
     };
 
     const [creditDebit, setCreditDebit] = useState(false);
+    const [creditOrDebit, setCreditOrDebit] = useState("Credit");
+
+    const [creditDebitValue, setCreditDebitValue] = useState("");
+    const [creditDebitItem, setCreditDebitItem] = useState("");
+    let reqData;
+    console.log(creditDebitItem);
+
+    if (creditDebitItem === "bonus") {
+        reqData = {bonus: creditDebitValue};
+    } else if (creditDebitItem === "profit") {
+        reqData = {totalProfit: creditDebitValue};
+    } else if (creditDebitItem === "refBonus") {
+        reqData = {ref: creditDebitValue};
+    } else if (creditDebitItem === "accountBalance") {
+        reqData = {accountBalance: creditDebitValue};
+    } else if (creditDebitItem === "deposit") {
+        reqData = {depositWalletbalance: creditDebitValue};
+    } else if (creditDebitItem === "totalInv") {
+        reqData = {totalInvestment: creditDebitValue};
+    }
+
     const handleCreditDebit = () => {
-        setCreditDebit(false);
-        const toastLoadingId = toast.loading("Please wait...");
-        setTimeout(() => {
-            toast.dismiss(toastLoadingId);
-            toast.success("Account updated successfully");
-        }, 3000);
-        setShowActions(false);
+        if (!creditDebitValue) {
+            alert("Please enter a value");
+        } else if (!reqData) {
+            alert("Please select a column");
+        } else {
+            const toastLoadingId = toast.loading("Please wait...");
+            const data = reqData;
+            console.log(data);
+            const url = `https://swiftearnprime.vercel.app/api/userdata/${id}`;
+            console.log(url);
+            axios
+                .patch(url, data)
+                .then((response) => {
+                    toast.dismiss(toastLoadingId);
+                    console.log(response);
+                    setCreditDebit(false);
+                    toast.success("Account updated successfully");
+                    setTimeout(() => {
+                        handleGetOneUserData();
+                    }, 1000);
+                    setShowActions(false);
+                    reqData = {};
+                    setCreditDebitValue("");
+                    setCreditDebitItem("");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     };
 
     const [resetPwd, setResetPwd] = useState(false);
@@ -111,30 +179,6 @@ const UserDetails = () => {
         }, 3000);
         setShowActions(false);
     };
-
-    const [oneUserData, setOneUserData] = useState({});
-    const {id} = useParams();
-
-    const handleGetOneUserData = () => {
-        const url = `https://swiftcryptrade-backend.vercel.app/api/userdata/${id}`;
-        axios
-            .get(url)
-            .then((res) => {
-                console.log(res?.data);
-                setOneUserData(res?.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
-    useEffect(() => {
-        if (id) {
-            handleGetOneUserData();
-        }
-    }, [id]);
-
-    console.log(oneUserData);
 
     return (
         <>
@@ -231,7 +275,7 @@ const UserDetails = () => {
                                             className="w-full h-max flex items-center pl-1 py-1 text-sm hover:bg-gray-300 cursor-pointer text-[#31ce36]"
                                             onClick={() => setLogin(!login)}
                                         >
-                                            Login as Jairo Arcila
+                                            Login as {oneUserData.fullName}
                                         </div>
                                         <div
                                             className="w-full h-max flex items-center pl-1 py-1 text-sm hover:bg-gray-300 cursor-pointer text-[#f25961]"
@@ -239,7 +283,7 @@ const UserDetails = () => {
                                                 setDeleteUser(!deleteUser)
                                             }
                                         >
-                                            Delete Jairo Arcila
+                                            Delete {oneUserData.fullName}
                                         </div>
                                     </div>
                                 )}
@@ -253,7 +297,7 @@ const UserDetails = () => {
                                     Account Balance
                                 </h1>
                                 <p className="text-sm">
-                                    ${oneUserData.currentBalance}.00
+                                    ${oneUserData.accountBalance}.00
                                 </p>
                             </div>
                             <div className="w-full h-[45%]">
@@ -271,7 +315,7 @@ const UserDetails = () => {
                                     Profit
                                 </h1>
                                 <p className="text-sm">
-                                    ${oneUserData.interestWalletbalance}.00
+                                    ${oneUserData.totalProfit}.00
                                 </p>
                             </div>
                             <div className="w-full h-[45%]">
@@ -288,7 +332,7 @@ const UserDetails = () => {
                                 <h1 className=" text-[rgb(14,65,82)] font-bold">
                                     Referral Bonus
                                 </h1>
-                                <p className="text-sm">$0.00</p>
+                                <p className="text-sm">${oneUserData.ref}.00</p>
                             </div>
                             <div className="w-full h-[45%]">
                                 <h1 className=" text-[rgb(14,65,82)] font-bold">
@@ -304,7 +348,9 @@ const UserDetails = () => {
                                 <h1 className=" text-[rgb(14,65,82)] font-bold">
                                     Bonus
                                 </h1>
-                                <p className="text-sm">$0.00</p>
+                                <p className="text-sm">
+                                    ${oneUserData.bonus}.00
+                                </p>
                             </div>
                             <div className="w-full h-[45%]">
                                 <h1 className=" text-[rgb(14,65,82)] font-bold">
@@ -386,7 +432,9 @@ const UserDetails = () => {
                 closeIcon={true}
                 title={"Block User"}
             >
-                <p className="text-2xl">Are you sure you want to block {oneUserData.fullName}?</p>
+                <p className="text-2xl">
+                    Are you sure you want to block {oneUserData.fullName}?
+                </p>
             </Modal>
             <Modal
                 open={creditDebit}
@@ -400,7 +448,7 @@ const UserDetails = () => {
                         backgroundColor: "#0e4152",
                     },
                 }}
-                okText={"Submit"}
+                okText={`${creditOrDebit}`}
                 closeIcon={true}
                 title={`Credit/Debit ${oneUserData.fullName} account.`}
             >
@@ -413,6 +461,10 @@ const UserDetails = () => {
                             type="number"
                             placeholder="Enter amount"
                             className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                            onChange={(e) => {
+                                setCreditDebitValue(e.target.value);
+                            }}
+                            value={creditDebitValue}
                         />
                     </div>
                     <div className="w-full h-max">
@@ -421,14 +473,20 @@ const UserDetails = () => {
                             name=""
                             id=""
                             className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                            onChange={(e) => {
+                                setCreditDebitItem(e.target.value);
+                            }}
+                            value={creditDebitItem}
                         >
                             <option value="">Select Column</option>
-                            <option value="">Bonus</option>
-                            <option value="">Profit</option>
-                            <option value="">Ref_Bonus</option>
-                            <option value="">Account Balance</option>
-                            <option value="">Deposit</option>
-                            <option value="">Total Investment</option>
+                            <option value="bonus">Bonus</option>
+                            <option value="profit">Profit</option>
+                            <option value="refBonus">Ref_Bonus</option>
+                            <option value="accountBalance">
+                                Account Balance
+                            </option>
+                            <option value="deposit">Deposit</option>
+                            <option value="totalInv">Total Investment</option>
                         </select>
                     </div>
                     <div className="w-full">
@@ -437,10 +495,11 @@ const UserDetails = () => {
                             name=""
                             id=""
                             className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
+                            onChange={(e) => setCreditOrDebit(e.target.value)}
+                            value={creditOrDebit}
                         >
-                            <option value="">Select Type</option>
-                            <option value="">Credit</option>
-                            <option value="">Debit</option>
+                            <option value="Credit">Credit</option>
+                            <option value="Debit">Debit</option>
                         </select>
                         <p>
                             <span>NOTE: &nbsp;</span>You cannot debit the
@@ -465,8 +524,8 @@ const UserDetails = () => {
                 title={"Reset Password"}
             >
                 <p className="text-base">
-                    Are you sure you want to reset password for {oneUserData.fullName} to
-                    user01236
+                    Are you sure you want to reset password for{" "}
+                    {oneUserData.fullName} to user01236
                 </p>
             </Modal>
             <Modal
@@ -673,8 +732,9 @@ const UserDetails = () => {
                 title={"Delete User"}
             >
                 <p>
-                    Are you sure you want to delete {oneUserData.fullName} Account?
-                    Everything associated with this account will be loss.
+                    Are you sure you want to delete {oneUserData.fullName}{" "}
+                    Account? Everything associated with this account will be
+                    loss.
                 </p>
             </Modal>
         </>
