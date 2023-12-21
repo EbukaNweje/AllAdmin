@@ -3,10 +3,12 @@ import {IoReceiptOutline} from "react-icons/io5";
 import {GoGraph} from "react-icons/go";
 import {MdOutlineAccessTime} from "react-icons/md";
 import {FaArrowRight} from "react-icons/fa";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
-
+// import {Bar} from "react-chartjs-2";
+import {SimpleBarChart}   from './SimpleBarChart'
+import { SimpleLineChart } from "./SimpleLineChart";
 
 const Dashboard = () => {
     const loadAdminData = () => {
@@ -14,27 +16,33 @@ const Dashboard = () => {
         return adminData ? JSON.parse(adminData) : {};
     };
 
+    const nav = useNavigate()
+
     console.log(loadAdminData());
 
-    const getAllUserData = () =>{
-        const url = "https://swiftearnprime.vercel.app/api/alluserdata"
-        axios.get(url)
-        .then((response)=>{
-            // console.log(response);
-            localStorage.setItem("allUserData", JSON.stringify(response.data))
-        })
-        .catch((error)=>{
-            console.log(error);
-        })   
-    }
+    const getAllUserData = () => {
+        const url = "https://swiftearnprime.vercel.app/api/alluserdata";
+        axios
+            .get(url)
+            .then((response) => {
+                // console.log(response);
+                localStorage.setItem(
+                    "allUserData",
+                    JSON.stringify(response.data)
+                );
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
-    useEffect(()=>{
-        getAllUserData()
-    },[])
+    useEffect(() => {
+        getAllUserData();
+    }, []);
 
     const userData = localStorage.getItem("allUserData")
-    ? JSON.parse(localStorage.getItem("allUserData"))
-    : [];
+        ? JSON.parse(localStorage.getItem("allUserData"))
+        : [];
     console.log(userData);
 
     return (
@@ -183,7 +191,7 @@ const Dashboard = () => {
                             <p>2023</p>
                         </div>
                         <div className="w-full h-[85%]  bg-sky-100 flex items-center justify-center">
-                            graph comes here
+                            <SimpleLineChart />
                         </div>
                     </div>
                     <div className="w-[30%] phone:w-full h-max bg-white p-8">
@@ -191,45 +199,28 @@ const Dashboard = () => {
                             <p>Latest Users</p>
                         </div>
                         <div className="w-full h-max max-h-[45vh] overflow-y-auto flex flex-col gap-3">
-                            <div className="w-full h-14 rounded shadow flex justify-between p-4 cursor-pointer">
-                                <div className="flex flex-col justify-center ">
-                                    <p className="text-sm text-[rgb(14,65,82)] font-bold">
-                                        Jairo Arcila
-                                    </p>
-                                    <p className="text-xs">
-                                        jairoarcila09@gmail.com
-                                    </p>
+                            {userData?.data.map((item, index) => (
+                                <div
+                                    className="w-full h-14 rounded shadow flex justify-between p-4 cursor-pointer hover:underline"
+                                    key={index}
+                                    onClick={()=>{
+                                        
+                                        nav(`/admin/dashboard/user-details/${item?._id}`)
+                                    }}
+                                >
+                                    <div className="flex flex-col justify-center ">
+                                        <p className="text-sm text-[rgb(14,65,82)] font-bold">
+                                            {item?.fullName}
+                                        </p>
+                                        <p className="text-xs">
+                                            {item?.email}
+                                        </p>
+                                    </div>
+                                    <div className=" flex items-center">
+                                        <FaArrowRight />
+                                    </div>
                                 </div>
-                                <div className=" flex items-center">
-                                    <FaArrowRight />
-                                </div>
-                            </div>
-                            <div className="w-full h-14 rounded shadow flex justify-between p-4 cursor-pointer">
-                                <div className="flex flex-col justify-center ">
-                                    <p className="text-sm text-[rgb(14,65,82)] font-bold">
-                                        Jairo Arcila
-                                    </p>
-                                    <p className="text-xs">
-                                        jairoarcila09@gmail.com
-                                    </p>
-                                </div>
-                                <div className=" flex items-center">
-                                    <FaArrowRight />
-                                </div>
-                            </div>
-                            <div className="w-full h-14 rounded shadow flex justify-between p-4 cursor-pointer">
-                                <div className="flex flex-col justify-center ">
-                                    <p className="text-sm text-[rgb(14,65,82)] font-bold">
-                                        Jairo Arcila
-                                    </p>
-                                    <p className="text-xs">
-                                        jairoarcila09@gmail.com
-                                    </p>
-                                </div>
-                                <div className=" flex items-center">
-                                    <FaArrowRight />
-                                </div>
-                            </div>
+                            ))}
                             <div className="w-full h-14 rounded shadow flex justify-between p-4 cursor-pointer">
                                 <div className="flex flex-col justify-center ">
                                     <p className="text-sm text-[rgb(14,65,82)] font-bold">
@@ -251,7 +242,7 @@ const Dashboard = () => {
                         <p className=" text-xl">Transactions</p>
                     </div>
                     <div className="w-full h-[50vh] bg-sky-100 flex items-center justify-center ">
-                        chart goes here
+                        <SimpleBarChart />
                     </div>
                 </div>
             </div>
