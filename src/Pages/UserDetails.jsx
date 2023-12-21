@@ -336,10 +336,10 @@ const UserDetails = () => {
                             </div>
                             <div className="w-full h-[45%]">
                                 <h1 className=" text-[rgb(14,65,82)] font-bold">
-                                    KYC
+                                   Total Investment
                                 </h1>
-                                <p className="text-xs bg-[#f25961] text-white w-max py-1 px-2 rounded-full">
-                                    Active
+                                <p className="text-sm ">
+                                    ${oneUserData.totalInvestment}.00
                                 </p>
                             </div>
                         </div>
