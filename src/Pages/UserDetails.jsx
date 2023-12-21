@@ -5,6 +5,8 @@ import {Modal} from "antd";
 import {toast} from "react-hot-toast";
 import axios from "axios";
 import {useParams} from "react-router-dom";
+// import {useHistory} from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const UserDetails = () => {
 
@@ -179,6 +181,10 @@ const UserDetails = () => {
         }, 3000);
         setShowActions(false);
     };
+    const goBack = () => {
+        window.history.back()
+      };
+    
 
     return (
         <>
@@ -190,7 +196,7 @@ const UserDetails = () => {
                         </p>
                         <div className="flex items-center gap-2">
                             <NavLink to={"/admin/dashboard/manageusers"}>
-                                <button className="py-2 px-3 flex gap-1 items-center text-xs bg-[#0e4152] text-white rounded">
+                                <button className="py-2 px-3 flex gap-1 items-center text-xs bg-[#0e4152] text-white rounded" onClick={goBack}>
                                     <FaArrowLeft /> Back
                                 </button>
                             </NavLink>
