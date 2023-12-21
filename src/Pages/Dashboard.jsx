@@ -88,7 +88,7 @@ const Dashboard = () => {
                                     Active Subscribers
                                 </p>
                                 <span className="text-xl text-[rgb(87,89,98)]">
-                                    2
+                                    0
                                 </span>
                             </div>
                         </div>
@@ -101,7 +101,7 @@ const Dashboard = () => {
                                     Total Withdrawals
                                 </p>
                                 <span className="text-xl text-[rgb(87,89,98)]">
-                                    $0
+                                    $0.00
                                 </span>
                             </div>
                         </div>
@@ -114,7 +114,7 @@ const Dashboard = () => {
                                     Total Deposits
                                 </p>
                                 <span className="text-xl text-[rgb(87,89,98)]">
-                                    $10,000
+                                    $0.00
                                 </span>
                             </div>
                         </div>
@@ -129,7 +129,7 @@ const Dashboard = () => {
                                     Blocked Users
                                 </p>
                                 <span className="text-xl text-[rgb(87,89,98)]">
-                                    2
+                                    0
                                 </span>
                             </div>
                         </div>
@@ -142,7 +142,7 @@ const Dashboard = () => {
                                     Active Users
                                 </p>
                                 <span className="text-xl text-[rgb(87,89,98)]">
-                                    2
+                                    {userData?.data?.length}
                                 </span>
                             </div>
                         </div>
@@ -155,7 +155,7 @@ const Dashboard = () => {
                                     Pending Withdrawals
                                 </p>
                                 <span className="text-xl text-[rgb(87,89,98)]">
-                                    2
+                                    0
                                 </span>
                             </div>
                         </div>
@@ -168,7 +168,7 @@ const Dashboard = () => {
                                     Pending Deposits
                                 </p>
                                 <span className="text-xl text-[rgb(87,89,98)]">
-                                    2
+                                    0
                                 </span>
                             </div>
                         </div>

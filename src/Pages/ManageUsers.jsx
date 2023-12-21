@@ -123,7 +123,7 @@ const ManageUsers = () => {
                                             <p>{item?.phoneNumber}</p>
                                         </div>
                                         <div className="w-28 h-full flex items-center ">
-                                            <p>${item?.currentBalance}.00</p>
+                                            <p>${item?.accountBalance}.00</p>
                                         </div>
                                         <div className="w-32 h-full flex items-center ">
                                             <div

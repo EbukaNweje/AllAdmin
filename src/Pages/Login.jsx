@@ -44,7 +44,7 @@ const Login = () => {
           <div className="w-full h-screen bg-[#ebf8fc] flex justify-center">
               <div className="w-[29%] phone:w-[85%] h-[76%]">
                   <div className="w-full h-24 py-4 flex justify-center items-end ">
-                      <img src={logo} alt="" />
+                      <img src={logo} alt="" className='w-32 h-20 object-contain'/>
                   </div>
                   <div className="w-full h-max bg-white shadow rounded py-12 px-12 flex flex-col gap-5">
                       <div className="w-full h-max text-2xl font-semibold text-center mb-2 text-[pry-text]">
