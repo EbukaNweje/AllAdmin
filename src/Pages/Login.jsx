@@ -1,5 +1,5 @@
 import {NavLink, useNavigate} from 'react-router-dom'
-import logo from "../assets/logo2.png";
+import logo from "../assets/swiftlogo.png";
 import {GoMail} from "react-icons/go";
 import {LuKey} from "react-icons/lu";
 import axios from "axios";
@@ -99,7 +99,7 @@ const Login = () => {
                       </div>
                       <div className="w-full text-center">
                           <p className="text-sm">
-                              © Copyright 2023 Whitebit All Rights Reserved.
+                              © Copyright 2023 Swiftearnprime All Rights Reserved.
                           </p>
                       </div>
                   </div>

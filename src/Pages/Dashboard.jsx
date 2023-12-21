@@ -75,7 +75,7 @@ const Dashboard = () => {
                                     Total Users
                                 </p>
                                 <span className="text-xl text-[rgb(87,89,98)]">
-                                    {userData.data.length}
+                                    {userData?.data?.length}
                                 </span>
                             </div>
                         </div>

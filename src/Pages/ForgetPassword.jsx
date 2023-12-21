@@ -36,7 +36,7 @@ const ForgetPassword = () => {
                   </NavLink>
                 </div>
                 <div className="w-full text-center">
-                    <p className='text-sm'>© Copyright 2023 Whitebit All Rights Reserved.</p>
+                    <p className='text-sm'>© Copyright 2023 Swiftearnprime All Rights Reserved.</p>
                 </div>
             </div>
         </div>
