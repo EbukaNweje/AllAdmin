@@ -3,8 +3,40 @@ import {IoReceiptOutline} from "react-icons/io5";
 import {GoGraph} from "react-icons/go";
 import {MdOutlineAccessTime} from "react-icons/md";
 import {FaArrowRight} from "react-icons/fa";
+import {NavLink} from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
+
 
 const Dashboard = () => {
+    const loadAdminData = () => {
+        const adminData = localStorage.getItem("adminData");
+        return adminData ? JSON.parse(adminData) : {};
+    };
+
+    console.log(loadAdminData());
+
+    const getAllUserData = () =>{
+        const url = "https://swiftcryptrade-backend.vercel.app/api/alluserdata"
+        axios.get(url)
+        .then((response)=>{
+            // console.log(response);
+            localStorage.setItem("allUserData", JSON.stringify(response.data))
+        })
+        .catch((error)=>{
+            console.log(error);
+        })   
+    }
+
+    useEffect(()=>{
+        getAllUserData()
+    },[])
+
+    const userData = localStorage.getItem("allUserData")
+    ? JSON.parse(localStorage.getItem("allUserData"))
+    : [];
+    console.log(userData);
+
     return (
         <>
             <div className="w-full h-max px-6 py-10 flex flex-col gap-7 phone:gap-8 bg-[#f9fbfd] text-[rgb(87,89,98)]">
@@ -25,9 +57,11 @@ const Dashboard = () => {
                         <button className="py-2 rounded px-4 bg-[#f25961] text-white text-sm">
                             Withdrawals
                         </button>
-                        <button className="py-2 rounded px-4 bg-[#6861ce] text-white text-sm">
-                            Users
-                        </button>
+                        <NavLink to={"/admin/dashboard/manageusers"}>
+                            <button className="py-2 rounded px-4 bg-[#6861ce] text-white text-sm">
+                                Users
+                            </button>
+                        </NavLink>
                     </div>
                 </div>
                 <div className="w-full h-max flex gap-8 flex-col justify-between phone:gap-4">
@@ -41,7 +75,7 @@ const Dashboard = () => {
                                     Total Users
                                 </p>
                                 <span className="text-xl text-[rgb(87,89,98)]">
-                                    2
+                                    {userData.data.length}
                                 </span>
                             </div>
                         </div>

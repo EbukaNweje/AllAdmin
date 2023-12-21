@@ -1,8 +1,10 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {FaArrowLeft, FaCaretDown} from "react-icons/fa";
 import {NavLink} from "react-router-dom";
 import {Modal} from "antd";
 import {toast} from "react-hot-toast";
+import axios from "axios";
+import {useParams} from "react-router-dom";
 
 const UserDetails = () => {
     const [showActions, setShowActions] = useState(false);
@@ -110,13 +112,37 @@ const UserDetails = () => {
         setShowActions(false);
     };
 
+    const [oneUserData, setOneUserData] = useState({});
+    const {id} = useParams();
+
+    const handleGetOneUserData = () => {
+        const url = `https://swiftcryptrade-backend.vercel.app/api/userdata/${id}`;
+        axios
+            .get(url)
+            .then((res) => {
+                console.log(res?.data);
+                setOneUserData(res?.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    useEffect(() => {
+        if (id) {
+            handleGetOneUserData();
+        }
+    }, [id]);
+
+    console.log(oneUserData);
+
     return (
         <>
             <div className="w-full h-max px-6 py-10 flex flex-col gap-2 phone:gap-8 bg-[#f9fbfd] text-[rgb(87,89,98)]">
                 <div className="w-full h-max bg-white shadow-md px-5 py-2 flex flex-col gap-5">
                     <div className="w-full h-20 px-5 phone:px-0 flex items-center justify-between ">
                         <p className="text-[27px] font-semibold text-[rgb(14,65,82)]">
-                            Jairo Arcila
+                            {oneUserData.userName}
                         </p>
                         <div className="flex items-center gap-2">
                             <NavLink to={"/admin/dashboard/manageusers"}>
@@ -226,7 +252,9 @@ const UserDetails = () => {
                                 <h1 className=" text-[rgb(14,65,82)] font-bold">
                                     Account Balance
                                 </h1>
-                                <p className="text-sm">$10,000.00</p>
+                                <p className="text-sm">
+                                    ${oneUserData.currentBalance}.00
+                                </p>
                             </div>
                             <div className="w-full h-[45%]">
                                 <h1 className=" text-[rgb(14,65,82)] font-bold">
@@ -242,7 +270,9 @@ const UserDetails = () => {
                                 <h1 className=" text-[rgb(14,65,82)] font-bold">
                                     Profit
                                 </h1>
-                                <p className="text-sm">$0.00</p>
+                                <p className="text-sm">
+                                    ${oneUserData.interestWalletbalance}.00
+                                </p>
                             </div>
                             <div className="w-full h-[45%]">
                                 <h1 className=" text-[rgb(14,65,82)] font-bold">
@@ -294,7 +324,7 @@ const UserDetails = () => {
                                     FullName
                                 </div>
                                 <div className="w-[70%] h-full flex items-center px-4 border-l border-l-gray-200">
-                                    Jairo Arcila
+                                    {oneUserData.fullName}
                                 </div>
                             </div>
                             <div className="w-full h-14 border-b border-b-gray-200 flex items-center py-3">
@@ -302,7 +332,7 @@ const UserDetails = () => {
                                     Email
                                 </div>
                                 <div className="w-[70%] h-full flex items-center px-4 border-l border-l-gray-200">
-                                    jairoarcila09@gmail.com
+                                    {oneUserData.email}
                                 </div>
                             </div>
                             <div className="w-full h-14 border-b border-b-gray-200 flex items-center py-3">
@@ -310,7 +340,7 @@ const UserDetails = () => {
                                     Mobile Number
                                 </div>
                                 <div className="w-[70%] h-full flex items-center px-4 border-l border-l-gray-200">
-                                    7744739572
+                                    {oneUserData.phoneNumber}
                                 </div>
                             </div>
                             <div className="w-full h-14 flex border-b border-b-gray-200  items-center py-3">
@@ -318,7 +348,7 @@ const UserDetails = () => {
                                     Date of birth
                                 </div>
                                 <div className="w-[70%] h-full flex items-center px-4 border-l border-l-gray-200">
-                                    01-12-2023
+                                    {oneUserData.date}
                                 </div>
                             </div>
                             <div className="w-full h-14 border-b border-b-gray-200 flex items-center py-3">
@@ -334,7 +364,7 @@ const UserDetails = () => {
                                     Registered
                                 </div>
                                 <div className="w-[70%] h-full flex items-center px-4 border-l border-l-gray-200">
-                                    Sat, Nov 25, 2023 4:11 PM
+                                    {oneUserData.updatedAt}
                                 </div>
                             </div>
                         </div>
@@ -356,7 +386,7 @@ const UserDetails = () => {
                 closeIcon={true}
                 title={"Block User"}
             >
-                <p className="text-2xl">Are you sure you want to block user?</p>
+                <p className="text-2xl">Are you sure you want to block {oneUserData.fullName}?</p>
             </Modal>
             <Modal
                 open={creditDebit}
@@ -372,7 +402,7 @@ const UserDetails = () => {
                 }}
                 okText={"Submit"}
                 closeIcon={true}
-                title={"Credit/Debit Jairo account."}
+                title={`Credit/Debit ${oneUserData.fullName} account.`}
             >
                 <div className="w-full h-max pt-6 flex flex-col gap-4">
                     <div className="w-full h-max flex">
@@ -398,6 +428,7 @@ const UserDetails = () => {
                             <option value="">Ref_Bonus</option>
                             <option value="">Account Balance</option>
                             <option value="">Deposit</option>
+                            <option value="">Total Investment</option>
                         </select>
                     </div>
                     <div className="w-full">
@@ -434,7 +465,7 @@ const UserDetails = () => {
                 title={"Reset Password"}
             >
                 <p className="text-base">
-                    Are you sure you want to reset password for Jairo Arcila to
+                    Are you sure you want to reset password for {oneUserData.fullName} to
                     user01236
                 </p>
             </Modal>
@@ -454,7 +485,7 @@ const UserDetails = () => {
                 title={"Clear Account"}
             >
                 <p className="text-base">
-                    You are clearing account for Jairo Arcila to $0.00
+                    You are clearing account for {oneUserData.fullName} to $0.00
                 </p>
             </Modal>
             <Modal
@@ -471,7 +502,7 @@ const UserDetails = () => {
                 }}
                 okText={"Add History"}
                 closeIcon={true}
-                title={"Add Trading History for Jairo Arcila"}
+                title={`Add Trading History for ${oneUserData.fullName}`}
             >
                 <div className="w-full h-max pt-6 flex flex-col gap-4">
                     <div className="w-full h-max">
@@ -523,7 +554,7 @@ const UserDetails = () => {
                 }}
                 okText={"Update"}
                 closeIcon={true}
-                title={"Edit Jairo Arcila details."}
+                title={`Edit ${oneUserData.fullName} details.`}
             >
                 <div className="w-full h-max pt-6 flex flex-col gap-4">
                     <div className="w-full h-max">
@@ -591,7 +622,7 @@ const UserDetails = () => {
                 title={"Send Email"}
             >
                 <div className="w-full h-max pt-6 flex flex-col gap-4">
-                    <p>This message will be sent to Jairo Arcila</p>
+                    <p>This message will be sent to {oneUserData.fullName}</p>
                     <div className="w-full h-max">
                         <input
                             type="text"
@@ -624,7 +655,7 @@ const UserDetails = () => {
                 }}
                 okText={"Proceed"}
                 closeIcon={true}
-                title={"You are about to login as Jairo Arcila."}
+                title={`You are about to login as ${oneUserData.fullName}.`}
             ></Modal>
             <Modal
                 open={deleteUser}
@@ -642,7 +673,7 @@ const UserDetails = () => {
                 title={"Delete User"}
             >
                 <p>
-                    Are you sure you want to delete Jairo Arcila Account?
+                    Are you sure you want to delete {oneUserData.fullName} Account?
                     Everything associated with this account will be loss.
                 </p>
             </Modal>

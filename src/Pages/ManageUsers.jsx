@@ -3,8 +3,10 @@ import {HiUserAdd} from "react-icons/hi";
 import {Modal} from "antd";
 import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ManageUsers = () => {
+    const nav = useNavigate()
     const [addNewUser, setAddNewUser] = useState(false);
 
     const handleAddNewUser = () => {
@@ -21,6 +23,16 @@ const ManageUsers = () => {
       }
     }, []); 
 
+    const userData = localStorage.getItem("allUserData")
+        ? JSON.parse(localStorage.getItem("allUserData"))
+        : [];
+    console.log(userData);
+
+    // const handleManageUser = () =>{
+
+    // }
+    
+
     return (
         <>
             <div className="w-full h-max px-6 py-10 flex flex-col gap-2 phone:gap-8 bg-[#f9fbfd] text-[rgb(87,89,98)]">
@@ -34,19 +46,23 @@ const ManageUsers = () => {
                                 className="w-48 phone:w-24 h-8 border outline-offset-0 outline-0 border-solid border-gray-200 pl-2 text-sm rounded outline-gray-200 outline"
                             />
                             <button className="p-2 rounded flex items-center gap-1 justify-center text-xs text-white bg-[#48abf7]">
-                                <IoMail className={` ${showIcon? 'w-3 h-3':"w-6 h-5"}`} />
-                                {
-                                  showIcon && 'Send message'
-                                }
+                                <IoMail
+                                    className={` ${
+                                        showIcon ? "w-3 h-3" : "w-6 h-5"
+                                    }`}
+                                />
+                                {showIcon && "Send message"}
                             </button>
                             <button
                                 className="p-2 rounded flex items-center gap-1 justify-center text-xs text-white bg-[#0e4152]"
                                 onClick={handleAddNewUser}
                             >
-                                <HiUserAdd className={` ${showIcon? 'w-3 h-3':"w-6 h-5"}`} />
-                                {
-                                  showIcon && 'New user'
-                                }
+                                <HiUserAdd
+                                    className={` ${
+                                        showIcon ? "w-3 h-3" : "w-6 h-5"
+                                    }`}
+                                />
+                                {showIcon && "New user"}
                             </button>
                         </div>
                         <div className="w-full h-max overflow-x-auto pt-6 pb-6 px-6">
@@ -86,86 +102,62 @@ const ManageUsers = () => {
                                         <p>Action</p>
                                     </div>
                                 </div>
-                                <div className="w-max h-14 flex items-center text-[rgb(33,37,41)] text-sm">
-                                    <div className="w-14  h-full flex items-center ">
-                                        <input
-                                            type="checkbox"
-                                            className="w-3 h-3 phone:w-5 phone:h-5 cursor-pointer"
-                                        />
-                                    </div>
-                                    <div className="w-32  h-full flex items-center  ">
-                                        <p>Jairo Arcila</p>
-                                    </div>
-                                    <div className="w-32 h-full flex items-center ">
-                                        <p>jarcila09</p>
-                                    </div>
-                                    <div className="w-48 h-full flex items-center ">
-                                        <p>jairoarcila09@gmail.com </p>
-                                    </div>
-                                    <div className="w-36 h-full flex items-center ">
-                                        <p>9897009200202</p>
-                                    </div>
-                                    <div className="w-28 h-full flex items-center ">
-                                        <p>$10,000.00</p>
-                                    </div>
-                                    <div className="w-32 h-full flex items-center ">
-                                        <p>Nigeria</p>
-                                    </div>
-                                    <div className="w-32 h-full flex items-center ">
-                                        <div className="w-14 p-[0.10rem] bg-[#31ce36] rounded-full flex items-center justify-center text-white text-sm">
-                                            active
+                                {userData.data.map((item, index) => (
+                                    <div
+                                        className="w-max h-14 flex items-center text-[rgb(33,37,41)] text-sm"
+                                        key={index}
+                                    >
+                                        <div className="w-14  h-full flex items-center ">
+                                            <input
+                                                type="checkbox"
+                                                className="w-3 h-3 phone:w-5 phone:h-5 cursor-pointer"
+                                            />
+                                        </div>
+                                        <div className="w-32  h-full flex items-center  ">
+                                            <p>{item?.fullName}</p>
+                                        </div>
+                                        <div className="w-32 h-full flex items-center ">
+                                            <p>{item?.userName}</p>
+                                        </div>
+                                        <div className="w-48 h-full flex items-center ">
+                                            <p>{item?.email} </p>
+                                        </div>
+                                        <div className="w-36 h-full flex items-center ">
+                                            <p>{item?.phoneNumber}</p>
+                                        </div>
+                                        <div className="w-28 h-full flex items-center ">
+                                            <p>${item?.currentBalance}.00</p>
+                                        </div>
+                                        <div className="w-32 h-full flex items-center ">
+                                            <p>Nigeria</p>
+                                        </div>
+                                        <div className="w-32 h-full flex items-center ">
+                                            <div
+                                                className={`w-14 p-[0.10rem] ${
+                                                    item?.status === false
+                                                        ? `bg-[red]`
+                                                        : `bg-[#31ce36]`
+                                                } bg-[#31ce36] rounded-full flex items-center justify-center text-white text-sm`}
+                                            >
+                                                {item?.status === false
+                                                    ? "false"
+                                                    : "active"}
+                                            </div>
+                                        </div>
+                                        <div className="w-32 h-full flex items-center ">
+                                            <p>{item?.updatedAt.split("T")[0]}</p>
+                                        </div>
+                                        <div className="w-32 h-full flex items-center ">
+                                            <NavLink
+                                                to={`/admin/dashboard/user-details/${item?._id}`}
+                                            >
+                                                <button className="p-2 bg-[#6861ce] text-xs rounded text-white">
+                                                    Manage
+                                                </button>
+                                            </NavLink>
                                         </div>
                                     </div>
-                                    <div className="w-32 h-full flex items-center ">
-                                        <p>3 weeks ago</p>
-                                    </div>
-                                    <div className="w-32 h-full flex items-center ">
-                                        <NavLink to={`/admin/dashboard/user-details/${1}`}>
-                                            <button className="p-2 bg-[#6861ce] text-xs rounded text-white">
-                                                Manage
-                                            </button>
-                                        </NavLink>
-                                    </div>
-                                </div>
-                                <div className="w-max h-14 flex items-center text-[rgb(33,37,41)] text-sm">
-                                    <div className="w-14  h-full flex items-center ">
-                                        <input
-                                            type="checkbox"
-                                            className="w-3 h-3 phone:w-5 phone:h-5 cursor-pointer"
-                                        />
-                                    </div>
-                                    <div className="w-32  h-full flex items-center  ">
-                                        <p>Jairo Arcila</p>
-                                    </div>
-                                    <div className="w-32 h-full flex items-center ">
-                                        <p>jarcila09</p>
-                                    </div>
-                                    <div className="w-48 h-full flex items-center ">
-                                        <p>jairoarcila09@gmail.com </p>
-                                    </div>
-                                    <div className="w-36 h-full flex items-center ">
-                                        <p>9897009200202</p>
-                                    </div>
-                                    <div className="w-28 h-full flex items-center ">
-                                        <p>$10,000.00</p>
-                                    </div>
-                                    <div className="w-32 h-full flex items-center ">
-                                        <p>Nigeria</p>
-                                    </div>
-                                    <div className="w-32 h-full flex items-center ">
-                                        <div className="w-14 p-[0.10rem] bg-[#31ce36] rounded-full flex items-center justify-center text-white text-sm">
-                                            active
-                                        </div>
-                                    </div>
-                                    <div className="w-32 h-full flex items-center ">
-                                        <p>3 weeks ago</p>
-                                    </div>
-                                    <div className="w-32 h-full flex items-center ">
-                                        <button className="p-2 bg-[#6861ce] text-xs rounded text-white">
-                                            Manage
-                                        </button>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
                         <div className="full h-20 flex items-center gap-10 phone:gap-5 phone:justify-between">

@@ -2,13 +2,43 @@ import {NavLink, useNavigate} from 'react-router-dom'
 import logo from "../assets/logo2.png";
 import {GoMail} from "react-icons/go";
 import {LuKey} from "react-icons/lu";
+import axios from "axios";
+import toast from 'react-hot-toast'
 
 const Login = () => {
   const nav = useNavigate()
 
-  const handleLogin = () =>{
-    nav("/admin/dashboard")
-  }
+  const handleLogin = () => {
+      if (
+          document.getElementById("email").value === "" ||
+          document.getElementById("password").value === ""
+      ) {
+          alert("Please fill out all fields");
+      } else if (!document.getElementById("email").value) {
+          alert("Invalid email address");
+      } else {
+          let userData = {
+              email: document.getElementById("email").value,
+              password: document.getElementById("password").value,
+          };
+          console.log(userData)
+          axios
+              .post("https://swiftcryptrade-backend.vercel.app/api/adminlogin", userData)
+              .then((res) => {
+                console.log(res);
+                toast.success("Login Successful")
+                  localStorage.setItem("adminData", JSON.stringify(res.data));
+                  if (res.status === 200){
+                        nav("/admin/dashboard");
+                  }
+                //   window.location.reload();
+              })
+              .catch((error) => {
+                console.log(error);
+                  alert("Incorrect username or password");
+              });
+      }
+  };
   return (
       <>
           <div className="w-full h-screen bg-[#ebf8fc] flex justify-center">
@@ -21,46 +51,56 @@ const Login = () => {
                           <p>Manager Login</p>
                       </div>
                       <div className="w-full h-max flex flex-col gap-2">
-                          <p className='text-[rgb(14,65,82)] flex gap-1 items-center font-bold text-sm'>
+                          <p className="text-[rgb(14,65,82)] flex gap-1 items-center font-bold text-sm">
                               Your Email
                               <span className="text-red-700 flex items-center">
                                   *
                               </span>
                           </p>
-                          <div className='w-full h-10 border border-solid border-[rgb(210,228,236)] rounded-md flex items-center px-4 gap-4 text-[0.80rem]'>
+                          <div className="w-full h-10 border border-solid border-[rgb(210,228,236)] rounded-md flex items-center px-4 gap-4 text-[0.80rem]">
                               <GoMail />
                               <input
-                                  className='border-none outline-none w-[90%] h-full'
+                                  className="border-none outline-none w-[90%] h-full"
                                   type="email"
                                   placeholder="name@example.com"
+                                  id="email"
                               />
                           </div>
                       </div>
                       <div className="w-full h-max flex flex-col gap-2">
-                          <p className='text-[rgb(14,65,82)] flex gap-1 items-center font-bold text-sm'>
+                          <p className="text-[rgb(14,65,82)] flex gap-1 items-center font-bold text-sm">
                               Password
                               <span className="text-red-700 flex items-center">
                                   *
                               </span>
                           </p>
-                          <div className='w-full h-10 border border-solid border-[rgb(210,228,236)] rounded-md flex items-center px-4 gap-4 text-[0.80rem]'>
+                          <div className="w-full h-10 border border-solid border-[rgb(210,228,236)] rounded-md flex items-center px-4 gap-4 text-[0.80rem]">
                               <LuKey />
                               <input
-                                  className='border-none outline-none w-[90%] h-full'
+                                  className="border-none outline-none w-[90%] h-full"
                                   type="password"
                                   placeholder="Enter password"
+                                  id="password"
                               />
                           </div>
                       </div>
                       <div className="w-full flex flex-col gap-1">
-                        <NavLink to="/admin/forget-password">
-
-                          <p className='w-full flex justify-end text-sm font-bold cursor-pointer text-[#0e4152]'>Forget password ?</p>
-                        </NavLink>
-                          <button className='w-full flex items-center justify-center py-3 rounded text-white bg-[#0e4152]' onClick={handleLogin}>Sign in</button>
+                          <NavLink to="/admin/forget-password">
+                              <p className="w-full flex justify-end text-sm font-bold cursor-pointer text-[#0e4152]">
+                                  Forget password ?
+                              </p>
+                          </NavLink>
+                          <button
+                              className="w-full flex items-center justify-center py-3 rounded text-white bg-[#0e4152]"
+                              onClick={handleLogin}
+                          >
+                              Sign in
+                          </button>
                       </div>
                       <div className="w-full text-center">
-                          <p className='text-sm'>© Copyright 2023 Whitebit All Rights Reserved.</p>
+                          <p className="text-sm">
+                              © Copyright 2023 Whitebit All Rights Reserved.
+                          </p>
                       </div>
                   </div>
               </div>
