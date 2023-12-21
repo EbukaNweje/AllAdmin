@@ -1,5 +1,4 @@
 
-
 const Kyc = () => {
   return (
     <div>KYC</div>

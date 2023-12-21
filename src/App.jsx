@@ -7,7 +7,7 @@ import ActiveInvestment from "./Pages/ActiveInvestment";
 import ManageUsers from "./Pages/ManageUsers";
 import ManageDeposit from "./Pages/ManageDeposit";
 import ManageWithdrawal from "./Pages/ManageWithdrawal";
-import Kyc from "./Pages/KYC";
+// import Kyc from "./Pages/KYC";
 import CreateTask from "./Pages/CreateTask";
 import ManageTask from "./Pages/ManageTask";
 import Leads from "./Pages/Leads";
@@ -115,12 +115,12 @@ const router = createBrowserRouter([
                   </>
               ),
           },
-          {
-              path: "dashboard/kyc-applications",
-              element: <>
-              <Kyc />,
-              </>
-          },
+        //   {
+        //       path: "dashboard/kyc-applications",
+        //       element: <>
+        //       <Kyc />,
+        //       </>
+        //   },
           {
               path: "dashboard/create-task",
               element: <>
