@@ -4,9 +4,29 @@ import {GoMail} from "react-icons/go";
 import {LuKey} from "react-icons/lu";
 import axios from "axios";
 import toast from 'react-hot-toast'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const Login = () => {
+
+    const getAllUserData = () => {
+        const url = "https://swiftearnprime.vercel.app/api/alluserdata";
+        axios
+            .get(url)
+            .then((response) => {
+                // console.log(response);
+                localStorage.setItem(
+                    "allUserData",
+                    JSON.stringify(response?.data)
+                );
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    useEffect(() => {
+        getAllUserData();
+    }, []);
     const nav = useNavigate();
 
     const [loading, setLoading] = useState(false);
@@ -37,7 +57,7 @@ const Login = () => {
                 .then((res) => {
                     console.log(res);
                     toast.success("Login Successful");
-                    localStorage.setItem("adminData", JSON.stringify(res.data));
+                    localStorage.setItem("adminData", JSON.stringify(res?.data));
                     if (res.status === 200) {
                         nav("/admin/dashboard");
                     }
@@ -52,6 +72,7 @@ const Login = () => {
                     alert("Incorrect username or password");
                 });
         }
+       
     };
     return (
         <>

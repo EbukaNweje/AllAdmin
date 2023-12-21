@@ -12,36 +12,18 @@ import { SimpleLineChart } from "./SimpleLineChart";
 
 const Dashboard = () => {
     const loadAdminData = () => {
-        const adminData = localStorage.getItem("adminData");
-        return adminData ? JSON.parse(adminData) : {};
+        const adminData = localStorage?.getItem("adminData");
+        return adminData ? JSON?.parse(adminData) : {};
     };
 
-    const nav = useNavigate()
+    const nav = useNavigate();
 
     console.log(loadAdminData());
 
-    const getAllUserData = () => {
-        const url = "https://swiftearnprime.vercel.app/api/alluserdata";
-        axios
-            .get(url)
-            .then((response) => {
-                // console.log(response);
-                localStorage.setItem(
-                    "allUserData",
-                    JSON.stringify(response.data)
-                );
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
+  
 
-    useEffect(() => {
-        getAllUserData();
-    }, []);
-
-    const userData = localStorage.getItem("allUserData")
-        ? JSON.parse(localStorage.getItem("allUserData"))
+    const userData = localStorage?.getItem("allUserData")
+        ? JSON.parse(localStorage?.getItem("allUserData"))
         : [];
     console.log(userData);
 
@@ -199,22 +181,21 @@ const Dashboard = () => {
                             <p>Latest Users</p>
                         </div>
                         <div className="w-full h-max max-h-[45vh] overflow-y-auto flex flex-col gap-3">
-                            {userData?.data.map((item, index) => (
+                            {userData?.data?.map((item, index) => (
                                 <div
                                     className="w-full h-14 rounded shadow flex justify-between p-4 cursor-pointer hover:underline"
                                     key={index}
-                                    onClick={()=>{
-                                        
-                                        nav(`/admin/dashboard/user-details/${item?._id}`)
+                                    onClick={() => {
+                                        nav(
+                                            `/admin/dashboard/user-details/${item?._id}`
+                                        );
                                     }}
                                 >
                                     <div className="flex flex-col justify-center ">
                                         <p className="text-sm text-[rgb(14,65,82)] font-bold">
                                             {item?.fullName}
                                         </p>
-                                        <p className="text-xs">
-                                            {item?.email}
-                                        </p>
+                                        <p className="text-xs">{item?.email}</p>
                                     </div>
                                     <div className=" flex items-center">
                                         <FaArrowRight />
