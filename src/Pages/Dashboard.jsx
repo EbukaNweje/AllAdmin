@@ -4,8 +4,8 @@ import {GoGraph} from "react-icons/go";
 import {MdOutlineAccessTime} from "react-icons/md";
 import {FaArrowRight} from "react-icons/fa";
 import {NavLink, useNavigate} from "react-router-dom";
-import axios from "axios";
-import { useEffect } from "react";
+// import axios from "axios";
+// import { useEffect } from "react";
 // import {Bar} from "react-chartjs-2";
 import {SimpleBarChart}   from './SimpleBarChart'
 import { SimpleLineChart } from "./SimpleLineChart";

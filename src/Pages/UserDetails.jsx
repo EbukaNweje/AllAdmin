@@ -303,7 +303,7 @@ const UserDetails = () => {
                                     Account Balance
                                 </h1>
                                 <p className="text-sm">
-                                    ${oneUserData.accountBalance}.00
+                                    ${oneUserData?.accountBalance}.00
                                 </p>
                             </div>
                             <div className="w-full h-[45%]">
@@ -321,7 +321,7 @@ const UserDetails = () => {
                                     Profit
                                 </h1>
                                 <p className="text-sm">
-                                    ${oneUserData.totalProfit}.00
+                                    ${oneUserData?.totalProfit}.00
                                 </p>
                             </div>
                             <div className="w-full h-[45%]">
@@ -338,14 +338,14 @@ const UserDetails = () => {
                                 <h1 className=" text-[rgb(14,65,82)] font-bold">
                                     Referral Bonus
                                 </h1>
-                                <p className="text-sm">${oneUserData.ref}.00</p>
+                                <p className="text-sm">${oneUserData?.ref}.00</p>
                             </div>
                             <div className="w-full h-[45%]">
                                 <h1 className=" text-[rgb(14,65,82)] font-bold">
                                    Total Investment
                                 </h1>
                                 <p className="text-sm ">
-                                    ${oneUserData.totalInvestment}.00
+                                    ${oneUserData?.totalInvestment}.00
                                 </p>
                             </div>
                         </div>
@@ -355,15 +355,15 @@ const UserDetails = () => {
                                     Bonus
                                 </h1>
                                 <p className="text-sm">
-                                    ${oneUserData.bonus}.00
+                                    ${oneUserData?.bonus}.00
                                 </p>
                             </div>
                             <div className="w-full h-[45%]">
-                                <h1 className=" text-[rgb(14,65,82)] font-bold">
-                                    ROI Mode
+                            <h1 className=" text-[rgb(14,65,82)] font-bold">
+                                   Total Deposit
                                 </h1>
-                                <p className="text-xs bg-[#31ce36] w-max py-1 px-2 rounded-full text-white">
-                                    On
+                                <p className="text-sm ">
+                                    ${oneUserData?.totalDeposit}.00
                                 </p>
                             </div>
                         </div>
