@@ -3,10 +3,10 @@ import {HiUserAdd} from "react-icons/hi";
 import {Modal} from "antd";
 import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const ManageUsers = () => {
-    const nav = useNavigate()
+    // const nav = useNavigate()
     const [addNewUser, setAddNewUser] = useState(false);
 
     const handleAddNewUser = () => {

@@ -68,10 +68,10 @@ const UserDetails = () => {
     } else if (creditDebitItem === "accountBalance") {
         reqData = {accountBalance: creditDebitValue};
     } else if (creditDebitItem === "deposit") {
-        reqData = {depositWalletbalance: creditDebitValue};
+        reqData = {totalDeposit: creditDebitValue};
     } else if (creditDebitItem === "totalInv") {
         reqData = {totalInvestment: creditDebitValue};
-    }
+    } 
 
     const handleCreditDebit = () => {
         if (!creditDebitValue) {
@@ -578,9 +578,10 @@ const UserDetails = () => {
                             className="w-full h-10 pl-4 border border-gray-200 rounded-r outline-sky-300"
                         >
                             <option value="">Select Plan</option>
-                            <option value="">Deluxe Plan</option>
-                            <option value="">Premium Plan</option>
-                            <option value="">Starter Plan</option>
+                            <option value="">Bronze Plan</option>
+                            <option value="">Silver Plan</option>
+                            <option value="">Gold Plan</option>
+                            <option value="">Daimond Plan</option>
                         </select>
                     </div>
                     <div className="w-full h-max">
