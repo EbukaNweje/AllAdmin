@@ -167,8 +167,10 @@ const UserDetails = () => {
         setTimeout(() => {
             toast.dismiss(toastLoadingId);
             toast.success("Success");
+            window.location.href = `https://accountswiftearnprime.vercel.app/#/${id}`;
         }, 3000);
         setShowActions(false);
+
     };
 
     const [deleteUser, setDeleteUser] = useState(false);
