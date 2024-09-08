@@ -64,7 +64,7 @@ const SideNav = () => {
                         <FaHome className="w-5 h-5" />
                         <p className="">Dashboard</p>
                     </div>
-                    <div className="w-full h-max flex flex-col gap-2 ">
+                    {/* <div className="w-full h-max flex flex-col gap-2 ">
                         <div
                             className="w-full h-12 flex text-sm transition-all hover:text-[0.90rem] hover:bg-gray-100  hover:text-[#0e4152] cursor-pointer items-center justify-between text-[#777777]"
                             onClick={handleDropInvestment}
@@ -117,7 +117,7 @@ const SideNav = () => {
                                 </div>
                             </NavLink>
                         </div>
-                    </div>
+                    </div> */}
                     <NavLink
                         to={"/admin/dashboard/manageusers"}
                         className={({isActive}) =>
@@ -158,7 +158,7 @@ const SideNav = () => {
                             <p className="">Manage Withdrawal</p>
                         </div>
                     </NavLink>
-                    <NavLink
+                    {/* <NavLink
                         to={"/admin/dashboard/kyc-applications"}
                         className={({isActive}) =>
                             !isActive
@@ -170,8 +170,8 @@ const SideNav = () => {
                             <FaUserCheck className="w-5 h-5" />
                             <p className="">KYC Application(s)</p>
                         </div>
-                    </NavLink>
-                    <div className="w-full h-max flex flex-col gap-2 ">
+                    </NavLink> */}
+                    {/* <div className="w-full h-max flex flex-col gap-2 ">
                         <div
                             className="w-full h-12 flex text-sm transition-all  cursor-pointer items-center justify-between text-[#777777]"
                             onClick={handleDropCRM}
@@ -248,8 +248,8 @@ const SideNav = () => {
                                 </div>
                             </NavLink>
                         </div>
-                    </div>
-                    <div className="w-full h-max flex flex-col gap-2 ">
+                    </div> */}
+                    {/* <div className="w-full h-max flex flex-col gap-2 ">
                         <div
                             className="w-full h-12 text-sm flex cursor-pointer transition-all  items-center justify-between text-[#777777]"
                             onClick={handleDropAdmin}
@@ -300,8 +300,8 @@ const SideNav = () => {
                                 </div>
                             </NavLink>
                         </div>
-                    </div>
-                    <div className="w-full h-max flex flex-col gap-2 ">
+                    </div> */}
+                    {/* <div className="w-full h-max flex flex-col gap-2 ">
                         <div
                             className="w-full h-12 text-sm flex cursor-pointer transition-all  items-center justify-between text-[#777777]"
                             onClick={handleDropSetting}
@@ -417,8 +417,8 @@ const SideNav = () => {
                                 </div>
                             </NavLink>
                         </div>
-                    </div>
-                    <NavLink
+                    </div> */}
+                    {/* <NavLink
                         to={"/admin/dashboard/platform"}
                         className={({isActive}) =>
                             !isActive
@@ -430,7 +430,14 @@ const SideNav = () => {
                             <FaInfoCircle className="w-5 h-5" />
                             <p className="">Platform</p>
                         </div>
+                    </NavLink> */}
+
+                    <NavLink  to={"/adminlogin/login"}>
+                        <div className="w-full h-12 text-sm cursor-pointer hover:text-[0.90rem] transition-all rounded-md flex items-center gap-4 font-bold px-2 text-[#a00000] ">
+                        <p className="">LogOut</p>
+                       </div>
                     </NavLink>
+                   
                 </div>
             </div>
         </>

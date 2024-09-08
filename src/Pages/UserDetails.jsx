@@ -1,17 +1,17 @@
 import {useEffect, useState} from "react";
 import {FaArrowLeft, FaCaretDown} from "react-icons/fa";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {Modal} from "antd";
 import {toast} from "react-hot-toast";
 import axios from "axios";
 import {useParams} from "react-router-dom";
-// import {useHistory} from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
 
 const UserDetails = () => {
 
     const [oneUserData, setOneUserData] = useState({});
     const {id} = useParams();
+
+    const Nav = useNavigate()
 
     const handleGetOneUserData = () => {
         const url = `https://swiftearnprime.vercel.app/api/userdata/${id}`;
@@ -25,6 +25,10 @@ const UserDetails = () => {
                 console.log(error);
             });
     };
+
+    // const handlDeleteOneUserData = () => {
+       
+    // };
 
     useEffect(() => {
         if (id) {
@@ -59,33 +63,96 @@ const UserDetails = () => {
     let reqData;
     console.log(creditDebitItem);
 
-    if (creditDebitItem === "bonus") {
-        reqData = {bonus: creditDebitValue};
-    } else if (creditDebitItem === "profit") {
-        reqData = {totalProfit: creditDebitValue};
-    } else if (creditDebitItem === "refBonus") {
-        reqData = {ref: creditDebitValue};
-    } else if (creditDebitItem === "accountBalance") {
-        reqData = {accountBalance: creditDebitValue};
-    } else if (creditDebitItem === "deposit") {
-        reqData = {totalDeposit: creditDebitValue};
-    } else if (creditDebitItem === "totalInv") {
-        reqData = {totalInvestment: creditDebitValue};
-    } 
+    // if (creditDebitItem === "bonus") {
+    //     reqData = {bonus: `${Number(creditDebitValue) + Number(oneUserData.bonus)}`};
+    // } else if (creditDebitItem === "profit") {
+    //     reqData = {totalProfit:`${Number(creditDebitValue) + Number(oneUserData.totalProfit)}`};
+    // } else if (creditDebitItem === "refBonus") {
+    //     reqData = {ref: `${Number(creditDebitValue) + Number(oneUserData.ref)}`};
+    // } else if (creditDebitItem === "accountBalance") {
+    //     reqData = {accountBalance: `${Number(creditDebitValue) + Number(oneUserData.accountBalance)}`};
+    // } else if (creditDebitItem === "deposit") {
+    //     reqData = {totalDeposit: `${Number(creditDebitValue) + Number(oneUserData.totalDeposit)}`};
+    // } else if (creditDebitItem === "totalInv") {
+    //     reqData = {totalInvestment: `${Number(creditDebitValue) + Number(oneUserData.totalInvestment)}`};
+    // } 
+
+    // const handleCreditDebit = () => {
+    //     if (!creditDebitValue) {
+    //         alert("Please enter a value");
+    //     } else if (!reqData) {
+    //         alert("Please select a column");
+    //     } else {
+    //         const toastLoadingId = toast.loading("Please wait...");
+    //         const data = reqData;
+    //         console.log(data);
+    //         const url = `https://swiftearnprime.vercel.app/api/userdata/${id}`;
+    //         console.log(url);
+    //         axios
+    //             .patch(url, data)
+    //             .then((response) => {
+    //                 toast.dismiss(toastLoadingId);
+    //                 console.log(response);
+    //                 setCreditDebit(false);
+    //                 toast.success("Account updated successfully");
+    //                 setTimeout(() => {
+    //                     handleGetOneUserData();
+    //                 }, 1000);
+    //                 setShowActions(false);
+    //                 reqData = {};
+    //                 setCreditDebitValue("");
+    //                 setCreditDebitItem("");
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //             });
+    //     }
+    // };
 
     const handleCreditDebit = () => {
         if (!creditDebitValue) {
             alert("Please enter a value");
-        } else if (!reqData) {
+        } else if (!creditDebitItem) {
             alert("Please select a column");
         } else {
             const toastLoadingId = toast.loading("Please wait...");
-            const data = reqData;
-            console.log(data);
+    
+            // Determine whether to add (credit) or subtract (debit)
+            const value = Number(creditDebitValue); // Input value
+            const isCredit = creditOrDebit === "Credit"; // Check if credit or debit
+    
+            if (creditDebitItem === "bonus") {
+                reqData = { bonus: isCredit 
+                    ? `${Number(oneUserData.bonus) + value}` 
+                    : `${Number(oneUserData.bonus) - value}` };
+            } else if (creditDebitItem === "profit") {
+                reqData = { totalProfit: isCredit 
+                    ? `${Number(oneUserData.totalProfit) + value}` 
+                    : `${Number(oneUserData.totalProfit) - value}` };
+            } else if (creditDebitItem === "refBonus") {
+                reqData = { ref: isCredit 
+                    ? `${Number(oneUserData.ref) + value}` 
+                    : `${Number(oneUserData.ref) - value}` };
+            } else if (creditDebitItem === "accountBalance") {
+                reqData = { accountBalance: isCredit 
+                    ? `${Number(oneUserData.accountBalance) + value}` 
+                    : `${Number(oneUserData.accountBalance) - value}` };
+            } else if (creditDebitItem === "deposit") {
+                reqData = { totalDeposit: isCredit 
+                    ? `${Number(oneUserData.totalDeposit) + value}` 
+                    : `${Number(oneUserData.totalDeposit) - value}` };
+            } else if (creditDebitItem === "totalInv") {
+                reqData = { totalInvestment: isCredit 
+                    ? `${Number(oneUserData.totalInvestment) + value}` 
+                    : `${Number(oneUserData.totalInvestment) - value}` };
+            }
+    
+            console.log(reqData);
+    
+            // Proceed with the API call
             const url = `https://swiftearnprime.vercel.app/api/userdata/${id}`;
-            console.log(url);
             axios
-                .patch(url, data)
+                .patch(url, reqData)
                 .then((response) => {
                     toast.dismiss(toastLoadingId);
                     console.log(response);
@@ -120,11 +187,22 @@ const UserDetails = () => {
     const handleClearAcc = () => {
         setClearAcc(false);
         const toastLoadingId = toast.loading("Please wait...");
-        setTimeout(() => {
-            toast.dismiss(toastLoadingId);
-            toast.success("Account cleared successfully");
-        }, 3000);
-        setShowActions(false);
+        const Clr = {accountBalance: 0, bonus: 0, totalDeposit: 0, totalInvestment:0, totalProfit:0, totalWithdrawal: 0, tradingAccounts: 0}
+        const url = `https://swiftearnprime.vercel.app/api/userdata/${id}`;
+            axios
+                .patch(url, Clr)
+                .then((response) => {
+                    toast.dismiss(toastLoadingId);
+                    console.log(response);
+                    toast.success("Account Clear successfully");
+                    setTimeout(() => {
+                        handleGetOneUserData();
+                    }, 1000);
+                    setShowActions(false);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
     };
 
     const [addRoi, setAddRoi] = useState(false);
@@ -177,11 +255,21 @@ const UserDetails = () => {
     const handleDelete = () => {
         setDeleteUser(false);
         const toastLoadingId = toast.loading("Please wait...");
-        setTimeout(() => {
-            toast.dismiss(toastLoadingId);
-            toast.success("Success");
-        }, 3000);
         setShowActions(false);
+        const url = `https://swiftearnprime.vercel.app/api/userdata/${id}`;
+        axios
+            .delete(url)
+            .then((res) => {
+                console.log(res?.data);
+                setTimeout(() => {
+                    toast.dismiss(toastLoadingId);
+                    toast.success("Success");
+                }, 3000);
+                window.history.back()
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
     const goBack = () => {
         window.history.back()
@@ -288,7 +376,7 @@ const UserDetails = () => {
                                         <div
                                             className="w-full h-max flex items-center pl-1 py-1 text-sm hover:bg-gray-300 cursor-pointer text-[#f25961]"
                                             onClick={() =>
-                                                setDeleteUser(!deleteUser)
+                                                {setDeleteUser(!deleteUser);}
                                             }
                                         >
                                             Delete {oneUserData.fullName}

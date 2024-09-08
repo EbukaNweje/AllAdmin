@@ -13,7 +13,6 @@ const Login = () => {
         axios
             .get(url)
             .then((response) => {
-                // console.log(response);
                 localStorage.setItem(
                     "allUserData",
                     JSON.stringify(response?.data)
@@ -51,7 +50,7 @@ const Login = () => {
             console.log(userData);
             axios
                 .post(
-                    "https://swiftcryptrade-backend.vercel.app/api/adminlogin",
+                    "https://swiftearnprime.vercel.app/api/adminlogin",
                     userData
                 )
                 .then((res) => {
@@ -62,8 +61,6 @@ const Login = () => {
                         nav("/admin/dashboard");
                     }
                     setLoading(false);
-
-                    //   window.location.reload();
                 })
                 .catch((error) => {
                     console.log(error);
@@ -138,7 +135,7 @@ const Login = () => {
                         </div>
                         <div className="w-full text-center">
                             <p className="text-sm">
-                                © Copyright 2023 Swiftearnprime All Rights
+                                © Copyright 2024 Swiftearn Prime All Rights
                                 Reserved.
                             </p>
                         </div>

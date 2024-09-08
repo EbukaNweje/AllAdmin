@@ -4,9 +4,6 @@ import {GoGraph} from "react-icons/go";
 import {MdOutlineAccessTime} from "react-icons/md";
 import {FaArrowRight} from "react-icons/fa";
 import {NavLink, useNavigate} from "react-router-dom";
-// import axios from "axios";
-// import { useEffect } from "react";
-// import {Bar} from "react-chartjs-2";
 import {SimpleBarChart}   from './SimpleBarChart'
 import { SimpleLineChart } from "./SimpleLineChart";
 
@@ -202,7 +199,7 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                             ))}
-                            <div className="w-full h-14 rounded shadow flex justify-between p-4 cursor-pointer">
+                            {/* <div className="w-full h-14 rounded shadow flex justify-between p-4 cursor-pointer">
                                 <div className="flex flex-col justify-center ">
                                     <p className="text-sm text-[rgb(14,65,82)] font-bold">
                                         Jairo Arcila
@@ -214,7 +211,7 @@ const Dashboard = () => {
                                 <div className=" flex items-center">
                                     <FaArrowRight />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

@@ -3,17 +3,43 @@ import {HiUserAdd} from "react-icons/hi";
 import {Modal} from "antd";
 import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
+import {toast} from "react-hot-toast";
+import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 
 const ManageUsers = () => {
     // const nav = useNavigate()
     const [addNewUser, setAddNewUser] = useState(false);
+    const [userData, setUserData] = useState([]);
+    
 
     const handleAddNewUser = () => {
         setAddNewUser(!addNewUser);
     };
 
     const [showIcon, setShowIcon] = useState(true);
+
+    const getAllUserData = () => {
+        const url = "https://swiftearnprime.vercel.app/api/alluserdata";
+        axios
+            .get(url)
+            .then((response) => {
+                console.log(response.data.data);
+                setUserData(response.data.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    useEffect(() => {
+        getAllUserData();
+    }, []);
+    
+
+    useEffect(() => {
+
+    },[]);
 
     useEffect(() => {
       if (window.innerWidth <= 480) {
@@ -23,20 +49,80 @@ const ManageUsers = () => {
       }
     }, []); 
 
-    const userData = localStorage.getItem("allUserData")
-        ? JSON.parse(localStorage.getItem("allUserData"))
-        : [];
+    // const userData = localStorage.getItem("allUserData")
+    //     ? JSON.parse(localStorage.getItem("allUserData"))
+    //     : [];
     console.log(userData);
+
+
+    // const sendSignUpEmail = async () => {
+//   const data = {
+//     email: email.value,
+//   };
+//   fetch('https://tonexbackend.onrender.com/api/signupemailsand', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(data),
+//   })
+//   .then(response=> response.json())
+//     .then(response => {
+//       console.log(response);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
 
     // const handleManageUser = () =>{
 
     // }
+
+    const adminAproveEmailSand = async (email) => {
+        const data = {
+          email: email,
+        };
+
+        fetch('https://swiftearnprime.vercel.app/api/adminAproveEmailSand', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+        .then(response=> response.json())
+          .then(response => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+      };
+
+
+
+    const Verify = (id) => { 
+            const url = `https://swiftearnprime.vercel.app/api/UserVerify/${id}`;
+            axios.patch(url)
+                .then((response) => {
+                    console.log(response.data.data.email);
+                    adminAproveEmailSand(response.data.data.email);
+                    setTimeout(() => {
+                        window.location.reload();
+                      }, 5000);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+    }
     
 
     return (
         <>
             <div className="w-full h-max px-6 py-10 flex flex-col gap-2 phone:gap-8 bg-[#f9fbfd] text-[rgb(87,89,98)]">
-                <p className="text-[27px] font-semibold">Swiftearnprime users list</p>
+                <p className="text-[27px] font-semibold">Swiftearn Prime users list</p>
                 <div className="w-full h-max px-6 py-5 bg-white">
                     <div className="full">
                         <div className="w-full h-14 flex items-center justify-between border-b-2 border-b-gray-200 px-5">
@@ -90,7 +176,7 @@ const ManageUsers = () => {
                                         <p>Account Balance</p>
                                     </div>
                                     <div className="w-32 h-full flex items-center ">
-                                        <p>Status</p>
+                                        <p>Verify</p>
                                     </div>
                                     <div className="w-32 h-full flex items-center ">
                                         <p>Registered</p>
@@ -99,7 +185,7 @@ const ManageUsers = () => {
                                         <p>Action</p>
                                     </div>
                                 </div>
-                                {userData.data.map((item, index) => (
+                                {userData.map((item, index) => (
                                     <div
                                         className="w-max h-14 flex items-center text-[rgb(33,37,41)] text-sm"
                                         key={index}
@@ -125,18 +211,19 @@ const ManageUsers = () => {
                                         <div className="w-28 h-full flex items-center ">
                                             <p>${item?.accountBalance}.00</p>
                                         </div>
-                                        <div className="w-32 h-full flex items-center ">
-                                            <div
-                                                className={`w-14 p-[0.10rem] ${
-                                                    item?.status === false
-                                                        ? `bg-[red]`
-                                                        : `bg-[#31ce36]`
-                                                } bg-[#31ce36] rounded-full flex items-center justify-center text-white text-sm`}
+                                        <div className="w-40 h-full flex items-center ">
+                                            <button 
+                                            onClick={()=>{Verify(item._id);}}
+                                            className={`w-14 p-[0.10rem] ${
+                                                item?.verify === false
+                                                    ? `bg-[red]`
+                                                    : `bg-[#31ce36]`
+                                            } bg-[#31ce36] rounded-full flex items-center justify-center text-white text-sm`}
                                             >
-                                                {item?.status === false
+                                                    {item?.verify === false
                                                     ? "false"
-                                                    : "active"}
-                                            </div>
+                                                    : "true"}
+                                                </button>
                                         </div>
                                         <div className="w-32 h-full flex items-center ">
                                             <p>{item?.updatedAt.split("T")[0]}</p>
@@ -150,6 +237,11 @@ const ManageUsers = () => {
                                                 </button>
                                             </NavLink>
                                         </div>
+                                        {/* <div className="w-32 h-full flex items-center ">
+                                                <button className="p-2 bg-[#6861ce] text-xs rounded text-white">
+                                                    Verify User
+                                                </button>
+                                        </div> */}
                                     </div>
                                 ))}
                             </div>
