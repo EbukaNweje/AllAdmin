@@ -84,7 +84,7 @@ const ManageUsers = () => {
           email: email,
         };
 
-        fetch('https://swiftearnprime.vercel.app/api/adminAproveEmailSand', {
+        fetch('https://swiftearnprime.onrender.com/api/adminAproveEmailSand', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -109,9 +109,9 @@ const ManageUsers = () => {
                 .then((response) => {
                     console.log(response.data.data.email);
                     adminAproveEmailSand(response.data.data.email);
-                    setTimeout(() => {
-                        window.location.reload();
-                      }, 5000);
+                    // setTimeout(() => {
+                    //     window.location.reload();
+                    //   }, 5000);
                 })
                 .catch((error) => {
                     console.log(error);
