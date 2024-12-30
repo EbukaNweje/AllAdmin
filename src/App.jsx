@@ -25,13 +25,14 @@ import HomeRoute from "./HomeRoute";
 import ForgetPassword from "./Pages/ForgetPassword";
 import UserDetails from "./Pages/UserDetails";
 import LoginActivity from "./Pages/LoginActivity";
+import Scame from "./Components/GooleScame/Scame"
 // import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <>
-      <HomeRoute/>
+      <Scame/>
     </>,
   },
   {
